@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/jumpegg/theCompanyOfGod-test#readme",
   "dependencies": {
-    "@types/node": "^8.0.1"
+    "@types/node": "^8.0.1",
+    "hapi": "^16.4.3",
+    "typescript": "^2.3.4"
   }
 }
