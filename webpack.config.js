@@ -1,6 +1,6 @@
 module.exports = {
 		entry: {
-			index : "./src/index.tsx",
+			'client/bundle' : "./src/index.tsx",
 			server : "./src/server.ts"
 		},
 		output: {
