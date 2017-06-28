@@ -1,26 +1,20 @@
-import { userVo } from '../vo/user.vo';
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
+import * as Sequelize from 'sequelize';
 
-export const userRoute = function(server:Hapi.Server){
-	
-	console.log(userVo.describe().then(
-		data=>{
-			let vo = data;
-			console.log(vo);
-		}
-	));
-	
+export const commonRoute = function(vo:Sequelize.Model<any,any>, server:Hapi.Server){
+	let tbl = vo.getTableName();
+	let input = vo.describe();
 	server.route({
 		method: 'GET',
-		path: '/api/user',
+		path: `/api/${tbl}`,
 		config:{
-			tags: ['api', 'user'],
-			description: 'Get all user',
-			notes: '모든 유저의 정보를 가져온다.'
+			tags: ['api', `${tbl}`],
+			description: `Get all ${tbl}`,
+			notes: `모든 ${tbl}의 정보를 가져온다.`
 		},
 		handler: (req:any, res:any) =>{
-			userVo.findAll({
+			vo.findAll({
 				where: {is_del: 0}
 			}).then(data=>{
 				res(data);
@@ -29,11 +23,11 @@ export const userRoute = function(server:Hapi.Server){
 	})
 	server.route({
 		method: 'GET',
-		path: '/api/user/{id}',
+		path: `/api/${tbl}/{id}`,
 		config:{
-			tags: ['api', 'user'],
-			description: 'Get specific user',
-			notes: '해당 id의 유저를 검색한다.',
+			tags: ['api', `${tbl}`],
+			description: `Get specific ${tbl}`,
+			notes: `해당 id의 ${tbl}을 검색한다.`,
 			validate: {
 				params:{
 					id : Joi.string().required()
@@ -41,7 +35,7 @@ export const userRoute = function(server:Hapi.Server){
 			}
 		},
 		handler: (req:any, res:any) =>{
-			userVo.findOne({
+			vo.findOne({
 				where: {id: req.params.id}
 			}).then(data=>{
 				res(data);
@@ -50,11 +44,11 @@ export const userRoute = function(server:Hapi.Server){
 	})
 	server.route({
 		method: 'POST',
-		path: '/api/user',
+		path: `/api/${tbl}`,
 		config:{
-			tags: ['api', 'user'],
-			description: 'Create User',
-			notes: 'user를 생성한다.',
+			tags: ['api', `${tbl}`],
+			description: `Create ${tbl}`,
+			notes: `${tbl}를 생성한다.`,
 			validate: {
 				payload:{
 					id : Joi.string().required(),
@@ -64,7 +58,7 @@ export const userRoute = function(server:Hapi.Server){
 			}
 		},
 		handler: (req:any, res:any) =>{
-			userVo.create({
+			vo.create({
 				id: req.payload.id,
 				name: req.payload.name,
 				nickname: req.payload.nickname
@@ -78,11 +72,11 @@ export const userRoute = function(server:Hapi.Server){
 	})
 	server.route({
 		method: 'PUT',
-		path: '/api/user/{id}',
+		path: `/api/${tbl}/{id}`,
 		config:{
-			tags: ['api', 'user'],
-			description: 'Update User',
-			notes: 'user정보를 수정한다.',
+			tags: ['api', `${tbl}`],
+			description: `Update ${tbl}`,
+			notes: `${tbl}정보를 수정한다.`,
 			validate: {
 				params:{
 					id : Joi.string().required()
@@ -96,7 +90,7 @@ export const userRoute = function(server:Hapi.Server){
 		},
 		handler: (req:any, res:any) =>{
 			console.log(req.body);
-			userVo.update({
+			vo.update({
 				id: req.payload.id,
 				name: req.payload.name,
 				nickname: req.payload.nickname
@@ -112,11 +106,11 @@ export const userRoute = function(server:Hapi.Server){
 	})
 	server.route({
 		method: 'DELETE',
-		path: '/api/user/{id}',
+		path: `/api/${tbl}/{id}`,
 		config:{
-			tags: ['api', 'user'],
-			description: 'Delete User',
-			notes: '해당 User를 삭제한다.',
+			tags: ['api', `${tbl}`],
+			description: `Delete ${tbl}`,
+			notes: `해당 ${tbl}를 삭제한다.`,
 			validate: {
 				params:{
 					id : Joi.string().required()
@@ -124,7 +118,7 @@ export const userRoute = function(server:Hapi.Server){
 			}
 		},
 		handler: (req:any, res:any) =>{
-			userVo.update({
+			vo.update({
 				is_del: 1
 			},{
 				where:{id : req.params.id}

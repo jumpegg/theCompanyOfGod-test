@@ -2,6 +2,10 @@ import * as Hapi from 'hapi';
 import * as Path from 'path';
 import { sequelize } from './dbconn';
 import * as Sequelize from 'sequelize';
+import * as inert from 'inert';
+import * as vision from 'vision';
+// const HapiSwagger = require("hapi-swagger");
+
 import { 
 	userRoute, 
 	postRoute, 
@@ -9,7 +13,11 @@ import {
 	likeRoute 
 } from './route';
 
-
+const options = {
+	info: {
+		'title': 'Test API Documentation'
+	}
+}
 class Server {
 	public app:any;
 
@@ -20,13 +28,18 @@ class Server {
 	}
 
 	private init(){
-		console.log(Path.join(__dirname, 'dist/client'));
 		this.app = new Hapi.Server();
 		this.app.connection({
 			host: 'localhost',
 			port: 8000
 		})
-		this.app.register(require('inert'))
+		// this.app.register([inert, vision,
+		// 	{
+		// 		'register':require('hapi-swagger'),
+		// 		'options': options
+		// 	}
+		// ])
+		this.app.register([inert, vision, require("hapi-swagger")]);
 	}
 
 	private router(){

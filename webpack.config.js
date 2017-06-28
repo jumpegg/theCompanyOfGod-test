@@ -31,7 +31,8 @@ module.exports = {
 		externals: {
 				"react": "React",
 				"react-dom": "ReactDOM",
-				"sequelize": "require('sequelize')"
+				"sequelize": "require('sequelize')",
+				"hapi-swagger":"require('hapi-swagger')"
 		},
 		node: {
 			fs: "empty",
