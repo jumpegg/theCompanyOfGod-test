@@ -26,6 +26,6 @@ export const postVo = sequelize.define('post',{
 	},
 	is_del:{
 		type: Sequelize.INTEGER(1),
-		allowNull: false
+		allowNull: true
 	}
 })

@@ -8,6 +8,21 @@
 </head>
 <body>
 	<h1>Page Test</h1>
+	<form action="/user" method="post">
+		<input type="text" name="id">
+		<input type="text" name="name">
+		<input type="text" name="nickname">
+		<button type="submit">send</button>
+	</form>
+	<form action="/user/test" method="put">
+		<input type="text" name="id">
+		<input type="text" name="name">
+		<input type="text" name="nickname">
+		<button type="submit">update</button>
+	</form>
+	<button id="delBtn">delete button</button>
+	<button id="upBtn">update button</button>
+
 	<div id="example"></div>
 
 	<!-- Dependencies -->
@@ -16,5 +31,33 @@
 
 	<!-- Main -->
 	<script src="/client/bundle.js"></script>
+	<script>
+		var xhttp = new XMLHttpRequest();
+		var delBtn = document.getElementById("delBtn");
+		delBtn.onclick = function(){
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200){
+					alert(this.responseText);
+				}
+			}
+			xhttp.open("delete", "/user/wonny", true);
+			xhttp.send();
+		}
+
+		var upBtn = document.getElementById("upBtn");
+		upBtn.onclick = function(){
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200){
+					alert(this.responseText);
+				}
+			}
+			xhttp.open("put", "/user/test", true);
+			xhttp.send({
+				"id":'test2',
+				"name": 'test2',
+				"nickname": 'test2'
+			});
+		}
+	</script>
 </body>
 </html>

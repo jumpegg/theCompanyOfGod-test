@@ -23,6 +23,6 @@ export const commentVo = sequelize.define('comment',{
 	},
 	is_del:{
 		type: Sequelize.INTEGER(1),
-		allowNull: false
+		allowNull: true
 	}
 })

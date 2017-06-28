@@ -21,6 +21,6 @@ export const userVo = sequelize.define('user',{
 	},
 	is_del:{
 		type: Sequelize.INTEGER(1),
-		allowNull: false
+		allowNull: true
 	}
 })

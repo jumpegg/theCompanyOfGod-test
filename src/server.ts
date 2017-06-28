@@ -1,12 +1,14 @@
 import * as Hapi from 'hapi';
 import * as Path from 'path';
 import { sequelize } from './dbconn';
+import * as Sequelize from 'sequelize';
 import { 
 	userRoute, 
 	postRoute, 
 	commentRoute,
 	likeRoute 
-} from './route'
+} from './route';
+
 
 class Server {
 	public app:any;
@@ -53,8 +55,9 @@ class Server {
 				reply.file('views/index.html');
 			}
 		})
+		
 		userRoute(this.app);
-		postRoute(sequelize ,this.app);
+		postRoute(this.app);
 		commentRoute(this.app);
 		likeRoute(this.app);
 	}
