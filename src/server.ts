@@ -13,11 +13,6 @@ import {
 	likeRoute 
 } from './route';
 
-const options = {
-	info: {
-		'title': 'Test API Documentation'
-	}
-}
 class Server {
 	public app:any;
 
@@ -33,12 +28,6 @@ class Server {
 			host: 'localhost',
 			port: 8000
 		})
-		// this.app.register([inert, vision,
-		// 	{
-		// 		'register':require('hapi-swagger'),
-		// 		'options': options
-		// 	}
-		// ])
 		this.app.register([inert, vision, require("hapi-swagger")]);
 	}
 
